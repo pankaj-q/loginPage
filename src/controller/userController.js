@@ -27,7 +27,7 @@ const createUser = async (req, res) => {
      res.status(201).json({
         success: true,
         message: "User registerd successfully",
-        data:  {
+        data:  {        
         id: user._id,
         name: user.name,
         email: user.email,
