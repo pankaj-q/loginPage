@@ -20,8 +20,8 @@ const userSchema = new mongoose.Schema({
    password: {
     type: String,
     required: true,
-    trim: true,
     minlength: 6,
+    select: false
    }
 
 },{timestamps: true})
@@ -42,7 +42,7 @@ userSchema.pre('save', async function(next) {
 
 // Method to compare passwords
 userSchema.methods.comparePassword = async function(enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+  return await bcrypt.compare(password, this.password);
 };
 
 userSchema.methods.generateAccessToken = function () {
