@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken'
 
 const postSchema = new mongoose.Schema({
     title : {
@@ -23,7 +24,7 @@ const postSchema = new mongoose.Schema({
     image: {
         type: String,
         required: false,
-        
+
     }
 },{timestamps: true})
 

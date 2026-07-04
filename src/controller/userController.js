@@ -38,7 +38,7 @@ const createUser = async (req, res) => {
 // User login controller ->
 const loginUser = async (req,res) => {
 
-     console.log("user logged in ");
+   //   console.log("user logged in ");
      try {
       const {email, password} = req.body;
       if(!email || !password) {
@@ -55,7 +55,10 @@ const loginUser = async (req,res) => {
          })
       }
  
-      const isMatch = await bcrypt.compare(password, user.password)
+      
+      const isMatch = await bcrypt.compare(password,user.password);
+      // console.log("isMatch", isMatch)
+      // console.log(user.password)
 
       // console.log("stored hash", user.password)
       // console.log("enterePassword", password)
@@ -66,6 +69,9 @@ const loginUser = async (req,res) => {
           message: "Invalid Password"
          })
       }
+
+      const accessToken = user.generateAccessToken();
+      const refreshToken = user.generateRefreshToken();
  
       return res.status(200).json({
        message: "User logged In",
@@ -77,7 +83,38 @@ const loginUser = async (req,res) => {
      }
 }
 
+
+const deleteUser = async(req,res) => {
+  try {
+    const {id} = req.params;
+    console.log("id", id);
+    const user = await User.findById(id);
+    if(!user) {
+       return res.status(400).json({
+          success: false,
+          message: "user does not exist"
+       })
+    }
+    await User.findByIdAndDelete(id);
+ 
+    return res.status(200).json({
+       message: "User deleted successfully",
+       success: true,
+    })
+
+  } 
+  catch (error) {
+   console.error(error);
+   return res.status(500).json({
+      success: false,
+      message: "interval server error"
+   })
+   
+  }
+}
+
 export {
    createUser,
-   loginUser
-};
+   loginUser,
+   deleteUser,
+}

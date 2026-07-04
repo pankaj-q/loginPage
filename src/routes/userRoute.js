@@ -1,11 +1,12 @@
 import express from 'express'
-import {createUser, loginUser} from '../controller/userController.js'
+import {createUser, loginUser,deleteUser} from '../controller/userController.js'
 import verifyJWT from '../Middleware/authMiddleware.js'
 
 
 const router = express.Router();
 router.post('/register', createUser)
-router.get('/login', loginUser)
+router.post('/login', loginUser)
+router.delete('/delete/:id', deleteUser)
 
 
  export default router;
