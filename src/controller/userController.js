@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
       const user = await User.create({
         name, 
         email,
-        password: hashPassword,
+        password
      })
 
      return res.status(201).json({
